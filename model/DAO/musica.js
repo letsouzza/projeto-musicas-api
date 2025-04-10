@@ -47,14 +47,14 @@ const insertMusica = async function(musica) {
 }
 
 // Função para atualizar música existente 
-const updateMusica = async function() {
+const updateMusica = async function(musica) {
     try {
         
         let sql = `update tbl_musica set nome               = '${musica.nome}',
                                          duracao            = '${musica.duracao}',
                                          data_lancamento    = '${musica.data_lancamento}',
                                          letra              = '${musica.letra}',
-                                         link               = '${musica.link}',
+                                         link               = '${musica.link}'
                                     where id                = ${musica.id}`
                                         
         let result = await prisma.$executeRawUnsafe(sql) // Usamos o exedute porque não vai retornar dados 
