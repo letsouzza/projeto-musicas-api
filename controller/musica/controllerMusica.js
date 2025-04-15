@@ -95,7 +95,6 @@ const atualizarMusica = async function(numero, musica, contentType) {
      }
 }
 
-
 // Função para excluir uma música 
 const excluirMusica = async function(numero) {
     try {
