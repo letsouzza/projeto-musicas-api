@@ -1,14 +1,9 @@
 /*********************************************************************************************************************************************************************************
- *Objetivo: Criar o CRUD de dados da tabela de música no Banco de Dados
- *Data: 11/02/2025
- *Autor: Letícia -> Marcel 
+ *Objetivo: Criar o CRUD de dados da tabela de gravadora no Banco de Dados
+ *Data: 15/04/2025
+ *Autor: Letícia 
  *Versão: 1.0
 ***********************************************************************************************************************************************************************************/
-
-/* Para criar uma interação com o Banco de Dados devemos instalar:
-        npm install prisma --save 
-        npm install @prisma/client --save
-*/
 
 // Import da biblioteca do prisma client para realizar as ações no BD 
 const {PrismaClient} = require('@prisma/client')
@@ -16,20 +11,13 @@ const {PrismaClient} = require('@prisma/client')
 //Instancia da classe do Prisma Client (cria um objeto)
 const prisma = new PrismaClient()
 
-
-// Função para inserir nova música
-const insertMusica = async function(musica) {
+// Função para inserir nova gravadora
+const insertGravadora = async function(gravadora) {
     try {
-        let sql = `insert into tbl_musica ( nome,
-                                            duracao, 
-                                            data_lancamento, 
-                                            letra, 
-                                            link)
-                                values ('${musica.nome}',
-                                        '${musica.duracao}',
-                                        '${musica.data_lancamento}',
-                                        '${musica.letra}',
-                                        '${musica.link}')`
+        let sql = `insert into tbl_gravadora (nome,
+                                              telefone)
+                                values ('${gravadora.nome}',
+                                        '${gravadora.telefone}')`
 
 
         // Executa o scipt SQL no BD e aguarda o resultado (true ou false)
@@ -47,15 +35,12 @@ const insertMusica = async function(musica) {
 }
 
 // Função para atualizar música existente 
-const updateMusica = async function(musica) {
+const updateGravadora = async function(gravadora) {
     try {
         
-        let sql = `update tbl_musica set nome               = '${musica.nome}',
-                                         duracao            = '${musica.duracao}',
-                                         data_lancamento    = '${musica.data_lancamento}',
-                                         letra              = '${musica.letra}',
-                                         link               = '${musica.link}'
-                                    where id                =  ${musica.id}`
+        let sql = `update tbl_gravadora set nome               = '${gravadora.nome}',
+                                            telefone           = '${gravadora.telefone}'
+                                    where id_gravadora         =  ${gravadora.id_gravadora}`
                                         
         let result = await prisma.$executeRawUnsafe(sql) // Usamos o exedute porque não vai retornar dados 
         
@@ -70,13 +55,13 @@ const updateMusica = async function(musica) {
 }
 
 // Função para excluir música existente 
-const deleteMusica = async function(number) {
+const deleteGravadora = async function(number) {
     try {
         // Recebe o ID
         let id = number 
 
         // Script SQL 
-        let sql = `delete from tbl_musica where id=${id}`
+        let sql = `delete from tbl_gravadora where id_gravadora=${id}`
 
         // Encaminha o Script SQL para o BD
         let result = await prisma.$executeRawUnsafe(sql) // O delete não volta dados, por isso utiliza o execute 
@@ -91,11 +76,11 @@ const deleteMusica = async function(number) {
     }
 }
 
-// Função para retornar todas as músicas do BD
-const selectAllMusica = async function() {
+// Função para retornar todas as gravadoras do BD
+const selectAllGravadora = async function() {
     try {
         // Script SQL 
-        let sql = 'select * from tbl_musica order by id desc'
+        let sql = 'select * from tbl_gravadora'
 
         // Encaminha o Script SQL para o BD
         let result = await prisma.$queryRawUnsafe(sql)
@@ -110,14 +95,14 @@ const selectAllMusica = async function() {
     }
 }
 
-// Função para retornar uma música pelo ID
-const selectByIdMusica = async function(number) {
+// Função para retornar uma gravadora pelo ID
+const selectByIdGravadora = async function(number) {
     try {
         // Recebe o ID
         let id = number 
         
         // Script SQL 
-        let sql = `select * from tbl_musica where id=${id} `
+        let sql = `select * from tbl_gravadora where id_gravadora=${id} `
 
         // Encaminha o Script SQL para o BD
         let result = await prisma.$queryRawUnsafe(sql)
@@ -133,10 +118,9 @@ const selectByIdMusica = async function(number) {
 }
 
 module.exports = {
-    insertMusica,
-    updateMusica,
-    deleteMusica,
-    selectAllMusica,
-    selectByIdMusica 
+    insertGravadora,
+    updateGravadora,
+    deleteGravadora,
+    selectAllGravadora,
+    selectByIdGravadora
 }
-
