@@ -75,7 +75,7 @@ app.post('/v1/controle-musicas/musica', cors(), bodyParserJSON, async function(r
 })
 
 // Endpoint para listar todas as musicas
-app.get('/v1/controle-musicas/musica', cors(), async function(request, response){
+app.get('/v1/controle-musicas/musicas', cors(), async function(request, response){
 
     let resultMusica = await controllerMusicas.listarMusica()
 
@@ -84,7 +84,7 @@ app.get('/v1/controle-musicas/musica', cors(), async function(request, response)
 })
 
 // Endpoint para buscar música pelo ID
-app.get('/v1/controle-musicas/musica-id/:id', cors(), async function(request, response){
+app.get('/v1/controle-musicas/musica/:id', cors(), async function(request, response){
 
     let id = request.params.id 
 
@@ -95,7 +95,7 @@ app.get('/v1/controle-musicas/musica-id/:id', cors(), async function(request, re
 })
 
 // Endpoint para deletar música pelo ID
-app.delete('/v1/controle-musicas/deletar-musica/:id', cors(), async function(request, response){
+app.delete('/v1/controle-musicas/musica/:id', cors(), async function(request, response){
     
     //Sempre que for buscar pelo ID é por params 
     let id= request.params.id
@@ -107,7 +107,7 @@ app.delete('/v1/controle-musicas/deletar-musica/:id', cors(), async function(req
 })
 
 // Endpoint para atualizar música pelo ID
-app.put('/v1/controle-musicas/atualizar-musica/:id', cors(), bodyParserJSON, async function(request, response){
+app.put('/v1/controle-musicas/musica/:id', cors(), bodyParserJSON, async function(request, response){
 
     // Recebe o content-type da requisição
     let contentType = request.headers['content-type']
@@ -166,7 +166,7 @@ app.get('/v1/controle-musicas/usuarios', cors(), async function(request, respons
 })
 
 //Endpoint buscar pelo ID
-app.get('/v1/controle-musicas/usuario-id/:id', cors(), async function(request, response){
+app.get('/v1/controle-musicas/usuario/:id', cors(), async function(request, response){
 
     //Pegando o ID via params
     let id = request.params.id
@@ -179,7 +179,7 @@ app.get('/v1/controle-musicas/usuario-id/:id', cors(), async function(request, r
 })
 
 // Endpoint para deletar usuário pelo ID
-app.delete('/v1/controle-musicas/deletar-usuario/:id', cors(), async function(request, response){
+app.delete('/v1/controle-musicas/usuario/:id', cors(), async function(request, response){
     
     //Sempre que for buscar pelo ID é por params 
     let id= request.params.id
@@ -191,7 +191,7 @@ app.delete('/v1/controle-musicas/deletar-usuario/:id', cors(), async function(re
 })
 
 //Endpoint para atualizar usuário pelo ID
-app.put('/v1/controle-musicas/atualizar-usuario/:id', cors(), bodyParserJSON, async function(request, response){
+app.put('/v1/controle-musicas/usuario/:id', cors(), bodyParserJSON, async function(request, response){
 
     // Recebe o content-type da requisição
     let contentType = request.headers['content-type']
@@ -249,7 +249,7 @@ app.get('/v1/controle-musicas/gravadoras', cors(), async function(request, respo
 })
 
 //Endpoint buscar pelo ID
-app.get('/v1/controle-musicas/gravadora-id/:id', cors(), async function(request, response){
+app.get('/v1/controle-musicas/gravadora/:id', cors(), async function(request, response){
 
     //Pegando o ID via params
     let id = request.params.id
@@ -262,7 +262,7 @@ app.get('/v1/controle-musicas/gravadora-id/:id', cors(), async function(request,
 })
 
 // Endpoint para deletar gravadora pelo ID
-app.delete('/v1/controle-musicas/deletar-gravadora/:id', cors(), async function(request, response){
+app.delete('/v1/controle-musicas/gravadora/:id', cors(), async function(request, response){
     
     //Sempre que for buscar pelo ID é por params 
     let id= request.params.id
@@ -274,7 +274,7 @@ app.delete('/v1/controle-musicas/deletar-gravadora/:id', cors(), async function(
 })
 
 //Endpoint para atualizar gravadora pelo ID
-app.put('/v1/controle-musicas/atualizar-gravadora/:id', cors(), bodyParserJSON, async function(request, response){
+app.put('/v1/controle-musicas/gravadora/:id', cors(), bodyParserJSON, async function(request, response){
 
     // Recebe o content-type da requisição
     let contentType = request.headers['content-type']
@@ -331,7 +331,7 @@ app.get('/v1/controle-musicas/generos', cors(), async function(request, response
 })
 
 // Endpoint para buscar genero pelo id
-app.get('/v1/controle-musicas/genero-id/:id', cors(), async function(request, response){
+app.get('/v1/controle-musicas/genero/:id', cors(), async function(request, response){
 
     //Pegando o ID via params
     let id = request.params.id
@@ -344,7 +344,7 @@ app.get('/v1/controle-musicas/genero-id/:id', cors(), async function(request, re
 })
 
 // Endpoint para deletar genero pelo ID
-app.delete('/v1/controle-musicas/deletar-genero/:id', cors(), async function(request, response){
+app.delete('/v1/controle-musicas/genero/:id', cors(), async function(request, response){
 
     let id= request.params.id
 
@@ -355,7 +355,7 @@ app.delete('/v1/controle-musicas/deletar-genero/:id', cors(), async function(req
 })
 
 //Endpoint para atualizar genero pelo ID
-app.put('/v1/controle-musicas/atualizar-genero/:id', cors(), bodyParserJSON, async function(request, response){
+app.put('/v1/controle-musicas/genero/:id', cors(), bodyParserJSON, async function(request, response){
 
     let contentType = request.headers['content-type']
 
@@ -408,7 +408,7 @@ app.get('/v1/controle-musicas/bandas', cors(), async function(request, response)
 })
 
 // Endpoint para buscar banda pelo id
-app.get('/v1/controle-musicas/banda-id/:id', cors(), async function(request, response){
+app.get('/v1/controle-musicas/banda/:id', cors(), async function(request, response){
 
     let id = request.params.id
 
@@ -419,7 +419,7 @@ app.get('/v1/controle-musicas/banda-id/:id', cors(), async function(request, res
 })
 
 // Endpoint para deletar genero pelo ID
-app.delete('/v1/controle-musicas/deletar-banda/:id', cors(), async function(request, response){
+app.delete('/v1/controle-musicas/banda/:id', cors(), async function(request, response){
 
     let id= request.params.id
 
@@ -430,7 +430,7 @@ app.delete('/v1/controle-musicas/deletar-banda/:id', cors(), async function(requ
 })
 
 //Endpoint para atualizar banda pelo ID
-app.put('/v1/controle-musicas/atualizar-banda/:id', cors(), bodyParserJSON, async function(request, response){
+app.put('/v1/controle-musicas/banda/:id', cors(), bodyParserJSON, async function(request, response){
 
     let contentType = request.headers['content-type']
 
@@ -444,6 +444,81 @@ app.put('/v1/controle-musicas/atualizar-banda/:id', cors(), bodyParserJSON, asyn
     response.status(resultBanda.status_code)
     response.json(resultBanda)
 })
+
+
+/*********************************************************************************************************************************************************************************
+* Dia 22/04/2025 -> Autor: Letícia
+*Endpoints referentes a tabela de nacionalidade de: Inserir
+                                             Atualizar
+                                             Deletar
+                                             Listar tudo
+                                             Buscar pelo ID
+ **********************************************************************************************************************************************************************************/
+
+// Import da Controller do projeto 
+const controllerNacionalidade = require('./controller/nacionalidade/controllerNacionalidade')
+
+//EndPoint para inserir uma nacionalidade
+app.post('/v1/controle-musicas/nacionalidade', cors(), bodyParserJSON, async function(request, response){
+
+    let contentType = request.headers['content-type']
+
+    let dadosBody = request.body 
+
+    // Chama a função da controller para inserir os dados e aguarda o retorno da função 
+    let resultNacionalidade = await controllerNacionalidade.inserirNacionalidade(dadosBody, contentType)
+
+    response.status(resultNacionalidade.status_code)
+    response.json(resultNacionalidade)
+})
+
+// Endpoint para listar todas as nacionalidades
+app.get('/v1/controle-musicas/nacionalidades', cors(), async function(request, response){
+
+    let resultNacionalidade = await controllerNacionalidade.listarNacionalidade()
+
+    response.status(resultNacionalidade.status_code)
+    response.json(resultNacionalidade)
+})
+
+// Endpoint para buscar nacionalidade pelo id
+app.get('/v1/controle-musicas/nacionalidade/:id', cors(), async function(request, response){
+
+    let id = request.params.id
+
+    let resultNacionalidade = await controllerNacionalidade.buscarNacionalidade(id)
+
+    response.status(resultNacionalidade.status_code)
+    response.json(resultNacionalidade)
+})
+
+// Endpoint para deletar nacionalidade pelo ID
+app.delete('/v1/controle-musicas/nacionalidade/:id', cors(), async function(request, response){
+
+    let id= request.params.id
+
+    let resultNacionalidade = await controllerNacionalidade.excluirNacionalidade(id)
+
+    response.status(resultNacionalidade.status_code)
+    response.json(resultNacionalidade)
+})
+
+//Endpoint para atualizar nacionalidade pelo ID
+app.put('/v1/controle-musicas/nacionalidade/:id', cors(), bodyParserJSON, async function(request, response){
+
+    let contentType = request.headers['content-type']
+
+    let idNacionalidade = request.params.id
+
+    let dadosBody = request.body
+
+    // Chama a função e encaminha os argumentos: ID, Body e ContentType
+    let resultNacionalidade = await controllerNacionalidade.atualizarNacionalidade(idNacionalidade, dadosBody, contentType)
+
+    response.status(resultNacionalidade.status_code)
+    response.json(resultNacionalidade)
+})
+
 
 app.listen(8080, function(){
     console.log('API aguardando requisições ...')

@@ -36,7 +36,7 @@ const inserirGenero = async function(item, contentType){
 
 // Função para atualizar uma genero
 const atualizarGenero = async function(numero, item, contentType) {
-    // try {
+    try {
         let id = numero
 
         if(String(contentType).toLowerCase() == 'application/json')
@@ -71,9 +71,9 @@ const atualizarGenero = async function(numero, item, contentType) {
                 return message.ERROR_CONTENT_TYPE // 415
             }
 
-    // } catch (error) {
-    //     return message.ERROR_INTERNAL_SERVER_CONTROLLER // 500- controller
-    // }
+    } catch (error) {
+        return message.ERROR_INTERNAL_SERVER_CONTROLLER // 500- controller
+    }
 }
 
 // Função para excluir um genero
