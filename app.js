@@ -370,6 +370,81 @@ app.put('/v1/controle-musicas/atualizar-genero/:id', cors(), bodyParserJSON, asy
     response.json(resultGenero)
 })
 
+
+/*********************************************************************************************************************************************************************************
+* Dia 22/04/2025 -> Autor: Letícia
+*Endpoints referentes a tabela de banda de: Inserir
+                                             Atualizar
+                                             Deletar
+                                             Listar tudo
+                                             Buscar pelo ID
+ **********************************************************************************************************************************************************************************/
+
+// Import das Controller do projeto 
+const controllerBanda = require('./controller/banda/controllerBanda')
+
+//EndPoint para inserir uma banda  
+app.post('/v1/controle-musicas/banda', cors(), bodyParserJSON, async function(request, response){
+
+    let contentType = request.headers['content-type']
+
+    let dadosBody = request.body 
+
+    // Chama a função da controller para inserir os dados e aguarda o retorno da função 
+    let resultBanda = await controllerBanda.inserirBanda(dadosBody, contentType)
+
+    // Resposta e status code 
+    response.status(resultBanda.status_code)
+    response.json(resultBanda)
+})
+
+// Endpoint para listar todas as bandas
+app.get('/v1/controle-musicas/bandas', cors(), async function(request, response){
+
+    let resultBanda = await controllerBanda.listarBanda()
+
+    response.status(resultBanda.status_code)
+    response.json(resultBanda)
+})
+
+// Endpoint para buscar banda pelo id
+app.get('/v1/controle-musicas/banda-id/:id', cors(), async function(request, response){
+
+    let id = request.params.id
+
+    let resultBanda = await controllerBanda.buscarBanda(id)
+
+    response.status(resultBanda.status_code)
+    response.json(resultBanda)
+})
+
+// Endpoint para deletar genero pelo ID
+app.delete('/v1/controle-musicas/deletar-banda/:id', cors(), async function(request, response){
+
+    let id= request.params.id
+
+    let resultBanda = await controllerBanda.excluirBanda(id)
+
+    response.status(resultBanda.status_code)
+    response.json(resultBanda)
+})
+
+//Endpoint para atualizar banda pelo ID
+app.put('/v1/controle-musicas/atualizar-banda/:id', cors(), bodyParserJSON, async function(request, response){
+
+    let contentType = request.headers['content-type']
+
+    let idBanda = request.params.id
+
+    let dadosBody = request.body
+
+    // Chama a função e encaminha os argumentos: ID, Body e ContentType
+    let resultBanda = await controllerBanda.atualizarBanda(idBanda, dadosBody, contentType)
+
+    response.status(resultBanda.status_code)
+    response.json(resultBanda)
+})
+
 app.listen(8080, function(){
     console.log('API aguardando requisições ...')
 })

@@ -1,6 +1,6 @@
 /*********************************************************************************************************************************************************************************
- *Objetivo: Criar o CRUD de dados da tabela de gravadora no Banco de Dados
- *Data: 15/04/2025
+ *Objetivo: Criar o CRUD de dados da tabela de banda no Banco de Dados
+ *Data: 22/04/2025
  *Autor: Letícia 
  *Versão: 1.0
 ***********************************************************************************************************************************************************************************/
@@ -11,17 +11,15 @@ const {PrismaClient} = require('@prisma/client')
 //Instancia da classe do Prisma Client (cria um objeto)
 const prisma = new PrismaClient()
 
-// Função para inserir nova gravadora
-const insertGravadora = async function(gravadora) {
+const insertBanda = async function(banda) {
     try {
-        let sql = `insert into tbl_gravadora (nome,
-                                              telefone)
-                                values ('${gravadora.nome}',
-                                        '${gravadora.telefone}')`
+        let sql = `insert into tbl_banda (nome,
+                                          data_criacao)
+                                values ('${banda.nome}',
+                                        '${banda.data_criacao}')`
 
 
         // Executa o scipt SQL no BD e aguarda o resultado (true ou false)
-        // Obs: o await -> aguarda retornar o resultado, ele só funciona se tiver o async 
         let result = await prisma.$executeRawUnsafe(sql)
 
         if(result)
@@ -34,13 +32,12 @@ const insertGravadora = async function(gravadora) {
     }
 }
 
-// Função para atualizar gravadora existente 
-const updateGravadora = async function(gravadora) {
+const updateBanda = async function(banda) {
     try {
         
-        let sql = `update tbl_gravadora set nome               = '${gravadora.nome}',
-                                            telefone           = '${gravadora.telefone}'
-                                    where id_gravadora         =  ${gravadora.id_gravadora}`
+        let sql = `update tbl_banda set nome            = '${banda.nome}',
+                                        data_criacao    = '${banda.data_criacao}'
+                                    where id_banda          =  ${banda.id_banda}`
                                         
         let result = await prisma.$executeRawUnsafe(sql) // Usamos o exedute porque não vai retornar dados 
         
@@ -54,14 +51,11 @@ const updateGravadora = async function(gravadora) {
     }
 }
 
-// Função para excluir gravadora existente 
-const deleteGravadora = async function(number) {
+const deleteBanda = async function(number) {
     try {
-        // Recebe o ID
         let id = number 
 
-        // Script SQL 
-        let sql = `delete from tbl_gravadora where id_gravadora=${id}`
+        let sql = `delete from tbl_banda where id_banda=${id}`
 
         // Encaminha o Script SQL para o BD
         let result = await prisma.$executeRawUnsafe(sql) // O delete não volta dados, por isso utiliza o execute 
@@ -76,17 +70,15 @@ const deleteGravadora = async function(number) {
     }
 }
 
-// Função para retornar todas as gravadoras do BD
-const selectAllGravadora = async function() {
+const selectAllBanda = async function() {
     try {
-        // Script SQL 
-        let sql = 'select * from tbl_gravadora'
+        let sql = 'select * from tbl_banda'
 
         // Encaminha o Script SQL para o BD
         let result = await prisma.$queryRawUnsafe(sql)
 
         if(result)
-            return result // Retorna os dados do Banco 
+            return result
         else
             return false
 
@@ -95,20 +87,17 @@ const selectAllGravadora = async function() {
     }
 }
 
-// Função para retornar uma gravadora pelo ID
-const selectByIdGravadora = async function(number) {
+const selectByIdBanda = async function(number) {
     try {
-        // Recebe o ID
         let id = number 
         
-        // Script SQL 
-        let sql = `select * from tbl_gravadora where id_gravadora=${id} `
+        let sql = `select * from tbl_banda where id_banda=${id} `
 
         // Encaminha o Script SQL para o BD
         let result = await prisma.$queryRawUnsafe(sql)
         
         if(result)
-            return result // Retorna os dados do Banco 
+            return result 
         else
             return false
 
@@ -118,9 +107,9 @@ const selectByIdGravadora = async function(number) {
 }
 
 module.exports = {
-    insertGravadora,
-    updateGravadora,
-    deleteGravadora,
-    selectAllGravadora,
-    selectByIdGravadora
+    insertBanda,
+    updateBanda,
+    deleteBanda,
+    selectAllBanda,
+    selectByIdBanda
 }
