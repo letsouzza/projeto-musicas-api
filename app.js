@@ -449,10 +449,10 @@ app.put('/v1/controle-musicas/banda/:id', cors(), bodyParserJSON, async function
 /*********************************************************************************************************************************************************************************
 * Dia 22/04/2025 -> Autor: Letícia
 *Endpoints referentes a tabela de nacionalidade de: Inserir
-                                             Atualizar
-                                             Deletar
-                                             Listar tudo
-                                             Buscar pelo ID
+                                                    Atualizar
+                                                    Deletar
+                                                    Listar tudo
+                                                    Buscar pelo ID
  **********************************************************************************************************************************************************************************/
 
 // Import da Controller do projeto 
@@ -520,6 +520,78 @@ app.put('/v1/controle-musicas/nacionalidade/:id', cors(), bodyParserJSON, async 
 })
 
 
+/*********************************************************************************************************************************************************************************
+* Dia 22/04/2025 -> Autor: Letícia
+*Endpoints referentes a tabela tipo de artista de: Inserir
+                                                   Atualizar
+                                                   Deletar
+                                                   Listar tudo
+                                                   Buscar pelo ID
+ **********************************************************************************************************************************************************************************/
+
+// Import da Controller do projeto 
+const controllerTipoArtista = require('./controller/tipo_artista/controllerTipoArtista')
+
+//EndPoint para inserir uma nacionalidade
+app.post('/v1/controle-musicas/tipo-artista', cors(), bodyParserJSON, async function(request, response){
+
+    let contentType = request.headers['content-type']
+
+    let dadosBody = request.body 
+
+    // Chama a função da controller para inserir os dados e aguarda o retorno da função 
+    let resultTipo = await controllerTipoArtista.inserirTipoArtista(dadosBody, contentType)
+
+    response.status(resultTipo.status_code)
+    response.json(resultTipo)
+})
+
+// Endpoint para listar todas as nacionalidades
+app.get('/v1/controle-musicas/tipos-artista', cors(), async function(request, response){
+
+    let resultTipo = await controllerTipoArtista.listarTipoArtista()
+
+    response.status(resultTipo.status_code)
+    response.json(resultTipo)
+})
+
+// Endpoint para buscar nacionalidade pelo id
+app.get('/v1/controle-musicas/tipo-artista/:id', cors(), async function(request, response){
+
+    let id = request.params.id
+
+    let resultTipo = await controllerTipoArtista.buscarTipoArtista(id)
+
+    response.status(resultTipo.status_code)
+    response.json(resultTipo)
+})
+
+// Endpoint para deletar nacionalidade pelo ID
+app.delete('/v1/controle-musicas/tipo-artista/:id', cors(), async function(request, response){
+
+    let id= request.params.id
+
+    let resultTipo = await controllerTipoArtista.excluirTipoArtista(id)
+
+    response.status(resultTipo.status_code)
+    response.json(resultTipo)
+})
+
+//Endpoint para atualizar nacionalidade pelo ID
+app.put('/v1/controle-musicas/tipo-artista/:id', cors(), bodyParserJSON, async function(request, response){
+
+    let contentType = request.headers['content-type']
+
+    let idTipoArtista = request.params.id
+
+    let dadosBody = request.body
+
+    // Chama a função e encaminha os argumentos: ID, Body e ContentType
+    let resultTipo = await controllerTipoArtista.atualizarTipoArtista(idTipoArtista, dadosBody, contentType)
+
+    response.status(resultTipo.status_code)
+    response.json(resultTipo)
+})
 app.listen(8080, function(){
     console.log('API aguardando requisições ...')
 })
