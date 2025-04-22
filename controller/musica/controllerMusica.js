@@ -45,7 +45,6 @@ const inserirMusica = async function(musica, contentType) {
 // Função para atualizar uma música 
 const atualizarMusica = async function(numero, musica, contentType) {
      try {
-
         let id = numero
 
         // Copiamos o início do código inserir musica
@@ -60,7 +59,6 @@ const atualizarMusica = async function(numero, musica, contentType) {
                 )
                 {
                     return message.ERROR_REQUIRED_FIELDS //status code 400
-
                 }else{
 
                     // Verifica se o ID está no Banco de dados 

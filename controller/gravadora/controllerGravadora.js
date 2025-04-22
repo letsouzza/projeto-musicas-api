@@ -40,7 +40,7 @@ const inserirGravadora = async function(gravadora, contentType) {
         }
 }
 
-// Função para atualizar uma música 
+// Função para atualizar uma gravadora
 const atualizarGravadora = async function(numero, gravadora, contentType) {
     try {
 
@@ -87,7 +87,7 @@ const atualizarGravadora = async function(numero, gravadora, contentType) {
     }
 }
 
-// Função para excluir uma música 
+// Função para excluir uma gravadora 
 const excluirGravadora = async function(numero) {
     try {
         let id = numero
@@ -126,7 +126,7 @@ const excluirGravadora = async function(numero) {
     }
 }
 
-// Função para retornar uma lista de músicas 
+// Função para retornar uma lista de gravadoras
 const listarGravadora = async function() {
     try {
         // Objeto JSON
@@ -156,7 +156,7 @@ const listarGravadora = async function() {
     }
 }
 
-// Função para retornar uma música pelo ID 
+// Função para retornar uma gravadora pelo ID 
 const buscarGravadora = async function(numero) {
     try {
         let id = numero
