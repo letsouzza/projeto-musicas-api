@@ -532,7 +532,7 @@ app.put('/v1/controle-musicas/nacionalidade/:id', cors(), bodyParserJSON, async 
 // Import da Controller do projeto 
 const controllerTipoArtista = require('./controller/tipo_artista/controllerTipoArtista')
 
-//EndPoint para inserir uma nacionalidade
+//EndPoint para inserir um tipo artista
 app.post('/v1/controle-musicas/tipo-artista', cors(), bodyParserJSON, async function(request, response){
 
     let contentType = request.headers['content-type']
@@ -546,7 +546,7 @@ app.post('/v1/controle-musicas/tipo-artista', cors(), bodyParserJSON, async func
     response.json(resultTipo)
 })
 
-// Endpoint para listar todas as nacionalidades
+// Endpoint para listar todos os tipos artistas
 app.get('/v1/controle-musicas/tipos-artista', cors(), async function(request, response){
 
     let resultTipo = await controllerTipoArtista.listarTipoArtista()
@@ -555,7 +555,7 @@ app.get('/v1/controle-musicas/tipos-artista', cors(), async function(request, re
     response.json(resultTipo)
 })
 
-// Endpoint para buscar nacionalidade pelo id
+// Endpoint para buscar tipo artista pelo ID
 app.get('/v1/controle-musicas/tipo-artista/:id', cors(), async function(request, response){
 
     let id = request.params.id
@@ -566,7 +566,7 @@ app.get('/v1/controle-musicas/tipo-artista/:id', cors(), async function(request,
     response.json(resultTipo)
 })
 
-// Endpoint para deletar nacionalidade pelo ID
+// Endpoint para deletar tipo artista pelo ID
 app.delete('/v1/controle-musicas/tipo-artista/:id', cors(), async function(request, response){
 
     let id= request.params.id
@@ -577,7 +577,7 @@ app.delete('/v1/controle-musicas/tipo-artista/:id', cors(), async function(reque
     response.json(resultTipo)
 })
 
-//Endpoint para atualizar nacionalidade pelo ID
+//Endpoint para atualizar tipo artista pelo ID
 app.put('/v1/controle-musicas/tipo-artista/:id', cors(), bodyParserJSON, async function(request, response){
 
     let contentType = request.headers['content-type']
@@ -592,6 +592,82 @@ app.put('/v1/controle-musicas/tipo-artista/:id', cors(), bodyParserJSON, async f
     response.status(resultTipo.status_code)
     response.json(resultTipo)
 })
+
+
+/*********************************************************************************************************************************************************************************
+* Dia 06/05/2025 -> Autor: Letícia
+*Endpoints referentes a tabela tipo de album: Inserir
+                                              Atualizar
+                                              Deletar
+                                              Listar tudo
+                                              Buscar pelo ID
+ **********************************************************************************************************************************************************************************/
+
+// Import da Controller do projeto 
+const controllerTipoAlbum = require('./controller/tipo_album/controllerTipoAlbum')
+
+//EndPoint para inserir um tipo album
+app.post('/v1/controle-musicas/tipo-album', cors(), bodyParserJSON, async function(request, response){
+
+    let contentType = request.headers['content-type']
+
+    let dadosBody = request.body 
+
+    // Chama a função da controller para inserir os dados e aguarda o retorno da função 
+    let resultTipo = await controllerTipoAlbum.inserirTipoAlbum(dadosBody, contentType)
+
+    response.status(resultTipo.status_code)
+    response.json(resultTipo)
+})
+
+// Endpoint para listar todos os tipos albuns
+app.get('/v1/controle-musicas/tipos-album', cors(), async function(request, response){
+
+    let resultTipo = await controllerTipoAlbum.listarTipoAlbum()
+
+    response.status(resultTipo.status_code)
+    response.json(resultTipo)
+})
+
+// Endpoint para buscar tipo album pelo ID
+app.get('/v1/controle-musicas/tipo-album/:id', cors(), async function(request, response){
+
+    let id = request.params.id
+
+    let resultTipo = await controllerTipoAlbum.buscarTipoAlbum(id)
+
+    response.status(resultTipo.status_code)
+    response.json(resultTipo)
+})
+
+// Endpoint para deletar tipo album pelo ID
+app.delete('/v1/controle-musicas/tipo-album/:id', cors(), async function(request, response){
+
+    let id= request.params.id
+
+    let resultTipo = await controllerTipoAlbum.excluirTipoAlbum(id)
+
+    response.status(resultTipo.status_code)
+    response.json(resultTipo)
+})
+
+//Endpoint para atualizar tipo album pelo ID
+app.put('/v1/controle-musicas/tipo-album/:id', cors(), bodyParserJSON, async function(request, response){
+
+    let contentType = request.headers['content-type']
+
+    let idTipoAlbum = request.params.id
+
+    let dadosBody = request.body
+
+    // Chama a função e encaminha os argumentos: ID, Body e ContentType
+    let resultTipo = await controllerTipoAlbum.atualizarTipoAlbum(idTipoAlbum, dadosBody, contentType)
+
+    response.status(resultTipo.status_code)
+    response.json(resultTipo)
+})
+
+
 app.listen(8080, function(){
     console.log('API aguardando requisições ...')
 })

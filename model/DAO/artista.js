@@ -1,6 +1,6 @@
 /*********************************************************************************************************************************************************************************
- *Objetivo: Criar o CRUD de dados da tabela de banda no Banco de Dados
- *Data: 22/04/2025
+ *Objetivo: Criar o CRUD de dados da tabela de artista no Banco de Dados (com chave estrangeira)
+ *Data: 06/05/2025
  *Autor: Letícia 
  *Versão: 1.0
 ***********************************************************************************************************************************************************************************/
@@ -11,10 +11,10 @@ const {PrismaClient} = require('@prisma/client')
 //Instancia da classe do Prisma Client (cria um objeto)
 const prisma = new PrismaClient()
 
-const insertBanda = async function(banda) {
+const insertArtista = async function(artista) {
     try {
-        let sql = `insert into tbl_banda (nome,
-                                          data_criacao,
+        let sql = `insert into tbl_artista(nome,
+                                          data_nascimento,
                                           foto)
                                 values ('${banda.nome}',
                                         '${banda.data_criacao}',

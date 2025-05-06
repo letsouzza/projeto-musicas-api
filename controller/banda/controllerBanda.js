@@ -17,8 +17,9 @@ const inserirBanda = async function(banda, contentType) {
     try {
         if(String(contentType).toLowerCase() == 'application/json')
         {
-            if( banda.nome          == ''  || banda.nome          == null || banda.nome          == undefined || banda.nome.length          > 100 ||
-                banda.data_criacao  == ''  || banda.data_criacao  == null || banda.data_criacao  == undefined || banda.data_criacao.length  > 10
+            if( banda.nome          == ''       || banda.nome          == null || banda.nome          == undefined || banda.nome.length          > 100 ||
+                banda.data_criacao  == ''       || banda.data_criacao  == null || banda.data_criacao  == undefined || banda.data_criacao.length  > 10  ||
+                banda.foto          == undefined|| banda.foto.length   >  200
             )
             {
                 return message.ERROR_REQUIRED_FIELDS // 400
@@ -45,9 +46,10 @@ const atualizarBanda = async function(numero, banda, contentType) {
 
        if(String(contentType).toLowerCase() == 'application/json')
            {
-            if( banda.nome          == ''  || banda.nome          == null || banda.nome          == undefined || banda.nome.length          > 100 ||
-                banda.data_criacao  == ''  || banda.data_criacao  == null || banda.data_criacao  == undefined || banda.data_criacao.length  > 10  ||
-                id                  == ''  || id                  == null || id                  == undefined || isNaN(id)
+            if( banda.nome          == ''       || banda.nome          == null || banda.nome          == undefined || banda.nome.length          > 100 ||
+                banda.data_criacao  == ''       || banda.data_criacao  == null || banda.data_criacao  == undefined || banda.data_criacao.length  > 10  ||
+                banda.foto          == undefined|| banda.foto.length   >  200  ||
+                id                  == ''       || id                  == null || id                  == undefined || isNaN(id)
             )
             {
                 return message.ERROR_REQUIRED_FIELDS // 400
