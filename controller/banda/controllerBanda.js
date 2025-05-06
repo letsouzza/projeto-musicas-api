@@ -1,7 +1,7 @@
 /*********************************************************************************************************************************************************************************
- *Objetivo: Controller referente as ações de CRUD de Banda, responsável pela integração entre app e model
+ *Objetivo: Controller referente as ações de CRUD de Artista, responsável pela integração entre app e model
             Validações, tratamento de dados etc...
- *Data: 22/04/2025
+ *Data: 06/05/2025
  *Autor: Letícia
  *Versão: 1.0
 ***********************************************************************************************************************************************************************************/
@@ -10,23 +10,24 @@
 const message = require ('../../modulo/config.js')
 
 //import do DAO para realizar o CRUD no Banco de Dados 
-const bandaDAO = require ('../../model/DAO/banda.js')
+const artistaDAO = require ('../../model/DAO/artista.js')
 
-// Função para inserir nova banda
-const inserirBanda = async function(banda, contentType) {
+// Função para inserir novo artista
+const inserirArtista = async function(artista, contentType) {
     try {
         if(String(contentType).toLowerCase() == 'application/json')
         {
-            if( banda.nome          == ''       || banda.nome          == null || banda.nome          == undefined || banda.nome.length          > 100 ||
-                banda.data_criacao  == ''       || banda.data_criacao  == null || banda.data_criacao  == undefined || banda.data_criacao.length  > 10  ||
-                banda.foto          == undefined|| banda.foto.length   >  200
+            if( artista.nome             == '' || artista.nome             == null || artista.nome             == undefined || artista.nome.length             > 100 ||
+                artista.data_nascimento  == '' || artista.data_nascimento  == null || artista.data_nascimento  == undefined || artista.data_nascimento.length  > 10  ||
+                artista.foto             == '' || artista.foto             == null || artista.foto             == undefined || artista.foto.length             > 300  ||
+                artista.id_tipo_artista  == '' || artista.id_tipo_artista  ==  undefined || isNaN(artista.id_tipo_artista)
             )
             {
                 return message.ERROR_REQUIRED_FIELDS // 400
             }else{
-                let resultBanda = await bandaDAO.insertBanda(banda)
+                let resultArtista = await artistaDAO.insertArtista(artista)
 
-                if(resultBanda)
+                if(resultArtista)
                     return message.SUCESS_CREATED_ITEM // 201
                 else
                     return message.ERROR_INTERNAL_SERVER_MODEL // 500 -> erro model
@@ -39,31 +40,32 @@ const inserirBanda = async function(banda, contentType) {
         }
 }
 
-// Função para atualizar uma banda
-const atualizarBanda = async function(numero, banda, contentType) {
+// Função para atualizar um artista
+const atualizarArtista = async function(numero, artista, contentType) {
     try {
        let id = numero
 
        if(String(contentType).toLowerCase() == 'application/json')
            {
-            if( banda.nome          == ''       || banda.nome          == null || banda.nome          == undefined || banda.nome.length          > 100 ||
-                banda.data_criacao  == ''       || banda.data_criacao  == null || banda.data_criacao  == undefined || banda.data_criacao.length  > 10  ||
-                banda.foto          == undefined|| banda.foto.length   >  200  ||
-                id                  == ''       || id                  == null || id                  == undefined || isNaN(id)
+            if( artista.nome             == '' || artista.nome             == null || artista.nome             == undefined || artista.nome.length             > 100 ||
+                artista.data_nascimento  == '' || artista.data_nascimento  == null || artista.data_nascimento  == undefined || artista.data_nascimento.length  > 10  ||
+                artista.foto             == '' || artista.foto             == null || artista.foto             == undefined || artista.foto.length             > 300 ||
+                artista.id_tipo_artista  == '' || artista.id_tipo_artista  == undefined                                     || isNaN(artista.id_tipo_artista)        ||
+                id                       == '' || id                       == null || id                       == undefined || isNaN(id)
             )
             {
                 return message.ERROR_REQUIRED_FIELDS // 400
             }else{
-                let result = await bandaDAO.selectByIdBanda(id)
+                let result = await artistaDAO.selectByIdArtista(id)
 
                 if(result != false || typeof(result) == 'object'){
 
                     if(result.length > 0){
 
-                        banda.id_banda = id
-                        let resultBanda = await bandaDAO.updateBanda(banda)
+                        artista.id_artista = id
+                        let resultArtista = await artistaDAO.updateArtista(artista)
 
-                        if(resultBanda){
+                        if(resultArtista){
                             return message.SUCESS_UPDATE_ITEM // 200
                         }else{
                             return message.ERROR_INTERNAL_SERVER_MODEL // 500- model
@@ -82,22 +84,22 @@ const atualizarBanda = async function(numero, banda, contentType) {
     }
 }
 
-// Função para excluir uma banda
-const excluirBanda = async function(numero) {
+// Função para excluir um artista
+const excluirArtista = async function(numero) {
     try {
         let id = numero
 
-        if ( id == ''|| id == null || id == undefined || isNaN(id)){
+        if ( id == ''|| id == null || id == undefined || isNaN(id || id <= 0)){
             return message.ERROR_REQUIRED_FIELDS // status code 400
         }else{
             
             // Antes de excluir, estamos verificando se existe esse id 
-            let resultBanda = await bandaDAO.selectByIdBanda(id)
+            let resultArtista = await artistaDAO.selectByIdArtista(id)
 
-            if(resultBanda != false || typeof(resultBanda) == 'object'){
+            if(resultArtista != false || typeof(resultArtista) == 'object'){
 
-                if(resultBanda.length > 0){
-                    let result = await bandaDAO.deleteBanda(id)
+                if(resultArtista.length > 0){
+                    let result = await artistaDAO.deleteArtista(parseInt(id))
                     
                     if(result)
                         return message.SUCESS_DELETE_ITEM // 200
@@ -117,20 +119,37 @@ const excluirBanda = async function(numero) {
 }
 
 // Função para retornar uma lista de bandas
-const listarBanda = async function() {
+const listarArtista = async function() {
     try {
-        let dadosBanda = {}
+        //Cria um objeto array para montar a nova estrutura de artistas no forEach
+        let arrayArtista = []
 
-        let resultBanda = await bandaDAO.selectAllBanda()
+        let dadosArtista = {}
 
-        if(resultBanda != false || typeof(resultBanda) == 'object'){
-            if(resultBanda.length > 0){
-                dadosBanda.status = true
-                dadosBanda.status_code = 200,
-                dadosBanda.items = resultBanda.length
-                dadosBanda.bandas = resultBanda
+        let resultArtista = await artistaDAO.selectAllArtista()
 
-                return dadosBanda
+        if(resultArtista != false || typeof(resultArtista) == 'object'){
+            if(resultArtista.length > 0){
+                // Json de retorno 
+                dadosArtista.status = true
+                dadosArtista.status_code = 200,
+                dadosArtista.items = resultArtista.length
+            
+                // //Percorrer o array de tipos_artista para pegar ID do tipo e descobrir quais os dados
+                // //Precisamos utilizar o for of, pois o foreach não consegue trabalhar com requisições async com await
+
+                // for(const itemArtista of resultArtista){
+                //     /* Monta o objeto da classificação para retornar no Filme (1XN) */
+                //         //Busca os dados da classificação na controller de classificacao
+                //         let dadosTipo = await controllerClassificacao.buscarClassificacao(itemFilme.id_classificacao)
+                //         //Adiciona um atributo classificação no JSON de filmes e coloca os dados da classificação
+                //         itemFilme.classificacao = dadosClassificacao.classificacao
+                //         //Remover um atributo do JSON
+                //         delete itemFilme.id_classificacao
+                //     /* */
+                // }
+
+                return dadosArtista
             }else{
                 return message.ERROR_NOT_FOUND // 404
             }
@@ -152,7 +171,7 @@ const buscarBanda = async function(numero) {
         if ( id == ''|| id == null || id == undefined || isNaN(id)){
             return message.ERROR_REQUIRED_FIELDS // status code 400
         }else{
-            let resultBanda = await bandaDAO.selectByIdBanda(id)
+            let resultBanda = await artistaDAO.selectByIdBanda(id)
 
             if(resultBanda != false || typeof(resultBanda) == 'object'){
                 if(resultBanda.length > 0){

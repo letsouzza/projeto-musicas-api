@@ -15,11 +15,12 @@ const insertArtista = async function(artista) {
     try {
         let sql = `insert into tbl_artista(nome,
                                           data_nascimento,
-                                          foto)
-                                values ('${banda.nome}',
-                                        '${banda.data_criacao}',
-                                        '${banda.foto}')`
-
+                                          foto,
+                                          id_tipo_artista)
+                                values ('${artista.nome}',
+                                        '${artista.data_nascimento}',
+                                        '${artista.foto}',
+                                        '${artista.id_tipo_artista}')`
 
         // Executa o scipt SQL no BD e aguarda o resultado (true ou false)
         let result = await prisma.$executeRawUnsafe(sql)
@@ -34,13 +35,14 @@ const insertArtista = async function(artista) {
     }
 }
 
-const updateBanda = async function(banda) {
+const updateArtista = async function(artista) {
     try {
         
-        let sql = `update tbl_banda set nome            = '${banda.nome}',
-                                        data_criacao    = '${banda.data_criacao}',
-                                        foto            = '${banda.foto}'
-                                    where id_banda          =  ${banda.id_banda}`
+        let sql = `update tbl_artista set nome          = '${artista.nome}',
+                                        data_nascimento = '${artista.data_nascimento}',
+                                        foto            = '${artista.foto}',
+                                        id_tipo_artista = '${artista.id_tipo_artista}'
+                                    where id_artista    =  ${artista.id_tipo_artista}`
                                         
         let result = await prisma.$executeRawUnsafe(sql) // Usamos o exedute porque não vai retornar dados 
         
@@ -54,11 +56,11 @@ const updateBanda = async function(banda) {
     }
 }
 
-const deleteBanda = async function(number) {
+const deleteArtista = async function(number) {
     try {
         let id = number 
 
-        let sql = `delete from tbl_banda where id_banda=${id}`
+        let sql = `delete from tbl_artista where id_artista=${id}`
 
         // Encaminha o Script SQL para o BD
         let result = await prisma.$executeRawUnsafe(sql) // O delete não volta dados, por isso utiliza o execute 
@@ -73,9 +75,9 @@ const deleteBanda = async function(number) {
     }
 }
 
-const selectAllBanda = async function() {
+const selectAllArtista = async function() {
     try {
-        let sql = 'select * from tbl_banda'
+        let sql = 'select * from tbl_artista'
 
         // Encaminha o Script SQL para o BD
         let result = await prisma.$queryRawUnsafe(sql)
@@ -90,11 +92,11 @@ const selectAllBanda = async function() {
     }
 }
 
-const selectByIdBanda = async function(number) {
+const selectByIdArtista = async function(number) {
     try {
         let id = number 
         
-        let sql = `select * from tbl_banda where id_banda=${id} `
+        let sql = `select * from tbl_artista where id_artista=${id} `
 
         // Encaminha o Script SQL para o BD
         let result = await prisma.$queryRawUnsafe(sql)
@@ -110,9 +112,9 @@ const selectByIdBanda = async function(number) {
 }
 
 module.exports = {
-    insertBanda,
-    updateBanda,
-    deleteBanda,
-    selectAllBanda,
-    selectByIdBanda
+    insertArtista,
+    updateArtista,
+    deleteArtista,
+    selectAllArtista,
+    selectByIdArtista
 }
