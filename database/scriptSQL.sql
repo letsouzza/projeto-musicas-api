@@ -81,7 +81,7 @@ create table tbl_playlist (
     qnt_musicas     int not null,
     data_criacao    date not null,
     capa            varchar(200) not null,
-    id_usuario int not null,
+    id_usuario      int not null,
     constraint FK_USUARIO_PLAYLIST #Cria um nome para relação
     foreign key (id_usuario) #Especifica qual atributo dessa tabela sera a foreign key
     references tbl_usuario(id_usuario) #Especifica a origem da chave, ou seja de qual tabela vira a PK
