@@ -890,6 +890,80 @@ app.put('/v1/controle-musicas/album/:id', cors(), bodyParserJSON, async function
 })
 
 
+/*********************************************************************************************************************************************************************************
+* Dia 20/05/2025 -> Autor: Letícia
+*Endpoints referentes a tabela email:   Inserir
+                                        Atualizar
+                                        Deletar
+                                        Listar tudo
+                                        Buscar pelo ID
+ **********************************************************************************************************************************************************************************/
+
+// Import da Controller do projeto 
+const controllerEmail = require('./controller/email/controllerEmail')
+
+//EndPoint para inserir um email
+app.post('/v1/controle-musicas/email', cors(), bodyParserJSON, async function(request, response){
+
+    let contentType = request.headers['content-type']
+
+    let dadosBody = request.body 
+
+    // Chama a função da controller para inserir os dados e aguarda o retorno da função 
+    let resultEmail = await controllerEmail.inserirEmail(dadosBody, contentType)
+
+    response.status(resultEmail.status_code)
+    response.json(resultEmail)
+})
+
+// Endpoint para listar todos os emails
+app.get('/v1/controle-musicas/email', cors(), async function(request, response){
+
+    let resultEmail = await controllerEmail.listarEmail()
+
+    response.status(resultEmail.status_code)
+    response.json(resultEmail)
+})
+
+// Endpoint para buscar email pelo ID
+app.get('/v1/controle-musicas/email/:id', cors(), async function(request, response){
+
+    let id = request.params.id
+
+    let resultEmail = await controllerEmail.buscarEmail(id)
+
+    response.status(resultEmail.status_code)
+    response.json(resultEmail)
+})
+
+// Endpoint para deletar email pelo ID
+app.delete('/v1/controle-musicas/email/:id', cors(), async function(request, response){
+
+    let id= request.params.id
+
+    let resultEmail = await controllerEmail.excluirEmail(id)
+
+    response.status(resultEmail.status_code)
+    response.json(resultEmail)
+})
+
+//Endpoint para atualizar email pelo ID
+app.put('/v1/controle-musicas/email/:id', cors(), bodyParserJSON, async function(request, response){
+
+    let contentType = request.headers['content-type']
+
+    let idEmail = request.params.id
+
+    let dadosBody = request.body
+
+    // Chama a função e encaminha os argumentos: ID, Body e ContentType
+    let resultEmail = await controllerEmail.atualizarEmail(idEmail, dadosBody, contentType)
+
+    response.status(resultEmail.status_code)
+    response.json(resultEmail)
+})
+
+
 app.listen(8080, function(){
     console.log('API aguardando requisições ...')
 })
