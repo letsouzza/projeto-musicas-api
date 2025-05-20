@@ -726,7 +726,7 @@ app.delete('/v1/controle-musicas/artista/:id', cors(), async function(request, r
 })
 
 //Endpoint para atualizar artista pelo ID
-app.put('/v1/controle-musicas/tipo-album/:id', cors(), bodyParserJSON, async function(request, response){
+app.put('/v1/controle-musicas/artista/:id', cors(), bodyParserJSON, async function(request, response){
 
     let contentType = request.headers['content-type']
 
@@ -739,6 +739,80 @@ app.put('/v1/controle-musicas/tipo-album/:id', cors(), bodyParserJSON, async fun
 
     response.status(resultArtista.status_code)
     response.json(resultArtista)
+})
+
+
+/*********************************************************************************************************************************************************************************
+* Dia 06/05/2025 -> Autor: Letícia
+*Endpoints referentes a tabela playlist:Inserir
+                                        Atualizar
+                                        Deletar
+                                        Listar tudo
+                                        Buscar pelo ID
+ **********************************************************************************************************************************************************************************/
+
+// Import da Controller do projeto 
+const controllerPlaylist = require('./controller/playlist/controllerPlaylist')
+
+//EndPoint para inserir uma playlist
+app.post('/v1/controle-musicas/playlist', cors(), bodyParserJSON, async function(request, response){
+
+    let contentType = request.headers['content-type']
+
+    let dadosBody = request.body 
+
+    // Chama a função da controller para inserir os dados e aguarda o retorno da função 
+    let resultPlaylist = await controllerPlaylist.inserirPlaylist(dadosBody, contentType)
+
+    response.status(resultPlaylist.status_code)
+    response.json(resultPlaylist)
+})
+
+// Endpoint para listar todas as playlists
+app.get('/v1/controle-musicas/playlist', cors(), async function(request, response){
+
+    let resultPlaylist = await controllerPlaylist.listarPlaylist()
+
+    response.status(resultPlaylist.status_code)
+    response.json(resultPlaylist)
+})
+
+// Endpoint para buscar playlist pelo ID
+app.get('/v1/controle-musicas/playlist/:id', cors(), async function(request, response){
+
+    let id = request.params.id
+
+    let resultPlaylist = await controllerPlaylist.buscarPlaylist(id)
+
+    response.status(resultPlaylist.status_code)
+    response.json(resultPlaylist)
+})
+
+// Endpoint para deletar playlist pelo ID
+app.delete('/v1/controle-musicas/playlist/:id', cors(), async function(request, response){
+
+    let id= request.params.id
+
+    let resultPlaylist = await controllerPlaylist.excluirPlaylist(id)
+
+    response.status(resultPlaylist.status_code)
+    response.json(resultPlaylist)
+})
+
+//Endpoint para atualizar playlist pelo ID
+app.put('/v1/controle-musicas/playlist/:id', cors(), bodyParserJSON, async function(request, response){
+
+    let contentType = request.headers['content-type']
+
+    let idPlaylist = request.params.id
+
+    let dadosBody = request.body
+
+    // Chama a função e encaminha os argumentos: ID, Body e ContentType
+    let resultPlaylist = await controllerPlaylist.atualizarPlaylist(idPlaylist, dadosBody, contentType)
+
+    response.status(resultPlaylist.status_code)
+    response.json(resultPlaylist)
 })
 
 

@@ -145,15 +145,17 @@ const listarArtista = async function() {
                     /* Monta o objeto da classificação para retornar no Artista (1XN) */
                     //Busca os dados do tipo artista na controller de classificacao
                     let dadosTipo = await controllerTipoArtista.buscarTipoArtista(itemArtista.id_tipo_artista)
-
+                
                     //Adiciona um atributo tipo artista no JSON de artistas e coloca os dados da classificação
-                    itemArtista.tipo_artista = dadosTipo.tipo_artista
-
+                    itemArtista.tipo_de_artista = dadosTipo.tipo_de_artista
+                    
                     //Remover um atributo do JSON
                     delete itemArtista.id_tipo_artista
 
                     arrayArtista.push(itemArtista)
+                    console.log(arrayArtista)
                 }
+                
 
                 dadosArtista.artistas = arrayArtista
 
@@ -172,7 +174,7 @@ const listarArtista = async function() {
 // Função para retornar um artista pelo ID 
 const buscarArtista = async function(numero) {
     try {
-        let arrayArtistas = []
+        let arrayArtista = []
 
         let id = numero
 
@@ -192,20 +194,20 @@ const buscarArtista = async function(numero) {
                         /* Monta o objeto da classificação para retornar no Artista (1XN) */
                         //Busca os dados do tipo artista na controller de classificacao
                         let dadosTipo = await controllerTipoArtista.buscarTipoArtista(itemArtista.id_tipo_artista)
-    
+                    
                         //Adiciona um atributo tipo artista no JSON de artistas e coloca os dados da classificação
-                        itemArtista.tipo_artista = dadosTipo.tipo_artista
-    
+                        itemArtista.tipo_de_artista = dadosTipo.tipo_de_artista
+                        
                         //Remover um atributo do JSON
                         delete itemArtista.id_tipo_artista
     
-                        arrayArtistas.push(itemArtista)
+                        arrayArtista.push(itemArtista)
                     }
-
-                    dadosArtista.artistas = arrayArtistas
-
-                    return dadosArtista
                     
+    
+                    dadosArtista.artistas = arrayArtista
+    
+                    return dadosArtista
                 }else{
                     return message.ERROR_NOT_FOUND // 404
                 }

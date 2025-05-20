@@ -13,7 +13,7 @@ const prisma = new PrismaClient()
 
 const insertPlaylist = async function(playlist) {
     try {
-        let sql = `insert into tbl_playlist(nome,
+        let sql = `insert into tbl_playlist (nome,
                                             qnt_musicas,
                                             data_criacao,
                                             capa,
@@ -21,7 +21,7 @@ const insertPlaylist = async function(playlist) {
                                 values ('${playlist.nome}',
                                         '${playlist.qnt_musicas}',
                                         '${playlist.data_criacao}',
-                                        '${playlist.capa}'
+                                        '${playlist.capa}',
                                         '${playlist.id_usuario}')`
 
         // Executa o scipt SQL no BD e aguarda o resultado (true ou false)
@@ -42,10 +42,10 @@ const updatePlaylist = async function(playlist) {
         
         let sql = `update tbl_playlist set nome            = '${playlist.nome}',
                                            qnt_musicas     = '${playlist.qnt_musicas}',
-                                           data
-                                           foto            = '${playlist.foto}',
-                                           id_tipo_artista = '${playlist.id_tipo_artista}'
-                                    where id_artista    =  ${playlist.id_tipo_artista}`
+                                           data_criacao    = '${playlist.data_criacao}',
+                                           capa            = '${playlist.capa}',
+                                           id_usuario      = '${playlist.id_usuario}'
+                                    where id_playlist      =  ${playlist.id_playlist}`
                                         
         let result = await prisma.$executeRawUnsafe(sql) // Usamos o exedute porque não vai retornar dados 
         
@@ -55,15 +55,16 @@ const updatePlaylist = async function(playlist) {
             return false
                                                                     
     } catch (error) {
+        console.log(error)
         return false
     }
 }
 
-const deleteArtista = async function(number) {
+const deletePlaylist = async function(number) {
     try {
         let id = number 
 
-        let sql = `delete from tbl_artista where id_artista=${id}`
+        let sql = `delete from tbl_playlist where id_playlist=${id}`
 
         // Encaminha o Script SQL para o BD
         let result = await prisma.$executeRawUnsafe(sql) // O delete não volta dados, por isso utiliza o execute 
@@ -78,9 +79,9 @@ const deleteArtista = async function(number) {
     }
 }
 
-const selectAllArtista = async function() {
+const selectAllPlaylist = async function() {
     try {
-        let sql = 'select * from tbl_artista'
+        let sql = 'select * from tbl_playlist'
 
         // Encaminha o Script SQL para o BD
         let result = await prisma.$queryRawUnsafe(sql)
@@ -95,11 +96,11 @@ const selectAllArtista = async function() {
     }
 }
 
-const selectByIdArtista = async function(number) {
+const selectByIdPlaylist = async function(number) {
     try {
         let id = number 
         
-        let sql = `select * from tbl_artista where id_artista=${id} `
+        let sql = `select * from tbl_playlist where id_playlist=${id} `
 
         // Encaminha o Script SQL para o BD
         let result = await prisma.$queryRawUnsafe(sql)
@@ -115,9 +116,9 @@ const selectByIdArtista = async function(number) {
 }
 
 module.exports = {
-    insertArtista,
-    updateArtista,
-    deleteArtista,
-    selectAllArtista,
-    selectByIdArtista
+    insertPlaylist,
+    updatePlaylist,
+    deletePlaylist,
+    selectAllPlaylist,
+    selectByIdPlaylist
 }
