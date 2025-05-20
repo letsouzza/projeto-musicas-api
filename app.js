@@ -743,7 +743,7 @@ app.put('/v1/controle-musicas/artista/:id', cors(), bodyParserJSON, async functi
 
 
 /*********************************************************************************************************************************************************************************
-* Dia 06/05/2025 -> Autor: Letícia
+* Dia 20/05/2025 -> Autor: Letícia
 *Endpoints referentes a tabela playlist:Inserir
                                         Atualizar
                                         Deletar
@@ -813,6 +813,80 @@ app.put('/v1/controle-musicas/playlist/:id', cors(), bodyParserJSON, async funct
 
     response.status(resultPlaylist.status_code)
     response.json(resultPlaylist)
+})
+
+
+/*********************************************************************************************************************************************************************************
+* Dia 20/05/2025 -> Autor: Letícia
+*Endpoints referentes a tabela album:   Inserir
+                                        Atualizar
+                                        Deletar
+                                        Listar tudo
+                                        Buscar pelo ID
+ **********************************************************************************************************************************************************************************/
+
+// Import da Controller do projeto 
+const controllerAlbum = require('./controller/album/controllerAlbum')
+
+//EndPoint para inserir um album
+app.post('/v1/controle-musicas/album', cors(), bodyParserJSON, async function(request, response){
+
+    let contentType = request.headers['content-type']
+
+    let dadosBody = request.body 
+
+    // Chama a função da controller para inserir os dados e aguarda o retorno da função 
+    let resultAlbum = await controllerAlbum.inserirAlbum(dadosBody, contentType)
+
+    response.status(resultAlbum.status_code)
+    response.json(resultAlbum)
+})
+
+// Endpoint para listar todas os albuns
+app.get('/v1/controle-musicas/album', cors(), async function(request, response){
+
+    let resultAlbum = await controllerAlbum.listarAlbum()
+
+    response.status(resultAlbum.status_code)
+    response.json(resultAlbum)
+})
+
+// Endpoint para buscar album pelo ID
+app.get('/v1/controle-musicas/album/:id', cors(), async function(request, response){
+
+    let id = request.params.id
+
+    let resultAlbum = await controllerAlbum.buscarAlbum(id)
+
+    response.status(resultAlbum.status_code)
+    response.json(resultAlbum)
+})
+
+// Endpoint para deletar album pelo ID
+app.delete('/v1/controle-musicas/album/:id', cors(), async function(request, response){
+
+    let id= request.params.id
+
+    let resultAlbum = await controllerAlbum.excluirAlbum(id)
+
+    response.status(resultAlbum.status_code)
+    response.json(resultAlbum)
+})
+
+//Endpoint para atualizar album pelo ID
+app.put('/v1/controle-musicas/album/:id', cors(), bodyParserJSON, async function(request, response){
+
+    let contentType = request.headers['content-type']
+
+    let idAlbum = request.params.id
+
+    let dadosBody = request.body
+
+    // Chama a função e encaminha os argumentos: ID, Body e ContentType
+    let resultAlbum = await controllerAlbum.atualizarAlbum(idAlbum, dadosBody, contentType)
+
+    response.status(resultAlbum.status_code)
+    response.json(resultAlbum)
 })
 
 

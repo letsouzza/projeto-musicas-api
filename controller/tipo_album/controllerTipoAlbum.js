@@ -116,7 +116,7 @@ const listarTipoAlbum = async function() {
                 dadosTipo.status = true
                 dadosTipo.status_code = 200,
                 dadosTipo.items = resultTipo.length
-                dadosTipo.tipos_de_albuns = resultTipo
+                dadosTipo.tipo_de_album = resultTipo
 
                 return dadosTipo
             }else{
@@ -145,7 +145,7 @@ const buscarTipoAlbum = async function(numero) {
                 if(resultTipo.length > 0){
                     dadosTipo.status = true
                     dadosTipo.status_code = 200,
-                    dadosTipo.tipo_de_albuns = resultTipo
+                    dadosTipo.tipo_de_album = resultTipo
 
                     return dadosTipo
                 }else{
